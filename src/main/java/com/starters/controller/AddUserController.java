@@ -48,8 +48,9 @@ public class AddUserController {
 	public @ResponseBody String addTheUser(@RequestBody User user){
 		
 		AddUserService addUserService = new AddUserService();
-		addUserService.add(user);
+		addUserService.addUser(user);
 		System.out.println("NAME: "+user.getName());
+		System.out.println("FCM: "+user.getFcmToken());
 		
 		// return String response in case of success
 		return "USER SAVED";
