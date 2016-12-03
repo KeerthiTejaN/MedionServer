@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -war target/Medion/target/Medion-0.0.1-SNAPSHOT.war
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/Medion-1.0-SNAPSHOT.jar
