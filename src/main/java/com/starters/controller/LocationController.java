@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.starters.bean.User;
-import com.starters.bean.Coordinates;
+import com.starters.model.User;
+import com.starters.model.Coordinates;
 import com.starters.service.AddUserService;
 import com.starters.service.CalculateMedianService;
 

@@ -1,8 +1,11 @@
 package com.starters.inf;
 
-import com.starters.bean.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.scheduling.config.Task;
 
-public interface AddUserInterface {
+import com.starters.model.User;
 
-	public void addUser(User user);
+public interface AddUserInterface extends CrudRepository<User,Integer>{
+
+	//public void addUser(User user);
 }

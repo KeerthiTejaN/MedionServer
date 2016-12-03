@@ -1,4 +1,7 @@
-package com.starters.bean;
+package com.starters.model;
+
+import javax.persistence.Entity;
+
 
 public class Coordinates {
 	private double longitude;

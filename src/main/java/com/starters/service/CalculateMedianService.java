@@ -2,7 +2,7 @@ package com.starters.service;
 
 import java.util.List;
 
-import com.starters.bean.Coordinates;
+import com.starters.model.Coordinates;
 
 public class CalculateMedianService {
 	
