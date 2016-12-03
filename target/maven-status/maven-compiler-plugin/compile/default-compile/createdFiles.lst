@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 com/starters/service/CalculateMedianService.class
 com/starters/controller/AddUserController.class
 com/starters/model/User.class
@@ -7,3 +8,5 @@ com/starters/model/Coordinates.class
 com/starters/service/AddUserService.class
 com/starters/controller/LocationController.class
 com/starters/inf/AddUserInterface.class
+=======
+>>>>>>> 0dcd313c786864014d0b9c54c8290852f91bee8f

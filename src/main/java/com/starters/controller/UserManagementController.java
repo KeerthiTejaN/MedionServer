@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.starters.inf.AddUserInterface;
 import com.starters.model.User;
-import com.starters.service.AddUserService;
 
 @RestController
 public class UserManagementController {
 
 	@Autowired
-	AddUserService addUserService;
+	AddUserInterface addUserInterface;
 	
 	@RequestMapping(value="/api/verify", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String display(){
@@ -27,7 +27,7 @@ public class UserManagementController {
 	@RequestMapping(value="/api/addUser", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String addUser(@RequestBody User user){
 		
-		addUserService.save(user);
+		addUserInterface.save(user);
 		System.out.println("FCM: "+user.getFcmToken());
 		return "User Saved";
 	}
