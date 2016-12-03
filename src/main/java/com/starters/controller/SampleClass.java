@@ -1,7 +1,10 @@
 package com.starters.controller;
 
 
+import javax.ws.rs.core.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.starters.model.User;
@@ -45,5 +48,14 @@ public class SampleClass {
 		adduserservice.delete(id);
 		return "User Deleted";
 	}
+	
+	@GetMapping("/v")
+	public String v(){
+		
+		return "Medion Started!";
+		
+	}
+	
+	
 
 }
