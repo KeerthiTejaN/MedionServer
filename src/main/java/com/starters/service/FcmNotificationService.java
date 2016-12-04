@@ -8,7 +8,11 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public class FcmNotificationService {
 	
 	private static final String API_KEY =  "AIzaSyB5T_tdhF9_8rLpiiCSLadKah1OPQtiWZo";
