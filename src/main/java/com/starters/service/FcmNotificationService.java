@@ -11,14 +11,13 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@Transactional
+//@Service
+//@Transactional
 public class FcmNotificationService {
 	
-	private static final String API_KEY =  "AIzaSyB5T_tdhF9_8rLpiiCSLadKah1OPQtiWZo";
+	private static final String API_KEY =  "AIzaSyAj7eEqC0SSabOMbs_ruSqzvcrTs4dmTGY";
 	
 	public void notify(String message, String fcmToken){
-		
 		
 		try {
 			
@@ -28,7 +27,7 @@ public class FcmNotificationService {
             jData.put("message", message);
             
             // Whom to send FCM message.
-            jGcmData.put("to", fcmToken);
+            jGcmData.put("to", "ezEWc9FsCmE:APA91bGl6Utzr3vUJnLh1ZPNJgD_zjSUcrML9JdtgYXHUivYreAh1YvnPnhx19c8DwK3hrpEgS8A8CknZJd_eJVzvF2yZ7iHChjop4ccElG2d_F8lDTWQEfEmfJbDZ16JNgK6q3pmaJi");
            
             // What to send in FCM message.
             jGcmData.put("data", jData);
@@ -41,11 +40,11 @@ public class FcmNotificationService {
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
 
-            // Send GCM message content.
+            // Send FCM message content.
             OutputStream outputStream = conn.getOutputStream();
             outputStream.write(jGcmData.toString().getBytes());
 
-            // Read GCM response.
+            // Read FCM response.
             InputStream inputStream = conn.getInputStream();
             String resp = IOUtils.toString(inputStream);
             System.out.println(resp);
