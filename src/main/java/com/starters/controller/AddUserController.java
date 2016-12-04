@@ -61,13 +61,13 @@ public class AddUserController {
 		return "USER SAVED";
 	}
 	
-//	@GET
-//	@Path("/verify")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public Response verifyRESTService(InputStream incomingData) {
-//		String result = "Medion Successfully started..";
-// 
-//		// return HTTP response 200 in case of success
-//		return Response.status(200).entity(result).build();
-//	}
+	@GET
+	@Path("/verify")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response verifyRESTService(InputStream incomingData) {
+		String result = "Medion Successfully started..";
+ 
+		// return HTTP response 200 in case of success
+		return Response.status(200).entity(result).build();
+	}
 }

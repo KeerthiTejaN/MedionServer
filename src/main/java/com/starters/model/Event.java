@@ -19,7 +19,7 @@ public class Event {
 	    @Column(name = "eventtime", nullable = false)
 	    private String eventTime;
 	    @Column(name = "memberlist")
-	    private ArrayList<String> memberList;
+	    private int memberList;
 	
 	    public String getEventName() {
 	        return eventName;
@@ -45,11 +45,11 @@ public class Event {
 	        this.eventTime = eventTime;
 	    }
 	
-	    public ArrayList<String> getMemberList() {
+	    public int getMemberList() {
 	        return memberList;
 	    }
 	
-	    public void setMemberList(ArrayList<String> memberList) {
+	    public void setMemberList(int memberList) {
 	        this.memberList = memberList;
 	    } 
 }
