@@ -1,5 +1,6 @@
 package com.starters.model;
 
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class Event {
 	    @Column(name = "eventtime", nullable = false)
 	    private String eventTime;
 	    @Column(name = "memberlist")
-	    private String memberList;
+	    private int memberList;
 	
 	    public String getEventName() {
 	        return eventName;
@@ -44,11 +45,11 @@ public class Event {
 	        this.eventTime = eventTime;
 	    }
 	
-	    public String getMemberList() {
+	    public int getMemberList() {
 	        return memberList;
 	    }
 	
-	    public void setMemberList(String memberList) {
+	    public void setMemberList(int memberList) {
 	        this.memberList = memberList;
 	    } 
 }
