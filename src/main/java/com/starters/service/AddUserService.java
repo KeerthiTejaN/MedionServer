@@ -31,6 +31,16 @@ public class AddUserService{
 		return users;
 	}
 	
+	public List<String> findAllFcmTokens()
+	{
+		List<String> fcms = new ArrayList<>();
+		for(User user:adduserinterface.findAll())
+		{
+			fcms.add(user.getFcmToken());
+		}
+		return fcms;
+	}
+	
 	public void save(User user)
 	{
 		adduserinterface.save(user);

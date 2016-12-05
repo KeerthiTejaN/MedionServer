@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,17 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 //import com.starters.inf.AddEventInterface;
 import com.starters.model.Event;
+import com.starters.service.AddUserService;
 import com.starters.service.FcmNotificationService;
 
 @RestController
 public class EventManagementController {
 	
+	@Autowired
+	private AddUserService adduserservice;
+	
 //	@Autowired
 //	private AddEventInterface addEventInterface;
+	private List<String> fcms = new ArrayList<String>();
 	
 //	@Autowired
 //	FcmNotificationService fcmNotificationService;
 	
+	@GetMapping("/fcm")
+	public List<String> allFcms()
+	{
+		fcms = adduserservice.findAllFcmTokens();
+		return adduserservice.findAllFcmTokens();
+	}
 	
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
@@ -39,6 +51,10 @@ public class EventManagementController {
 		/* memberList above has a list of Client numbers
 		 * We need to create another ArrayList<String> memberFcmList;
 		 * that contains FCMtokens of each client by fetching from DB */
+		
+		/*fcms is the list string that has all the client fcm tokens*/
+		
+		
 		
 		StringBuilder message = new StringBuilder();
 		FcmNotificationService fcmNotificationService = new FcmNotificationService();
