@@ -27,9 +27,14 @@ public class EventManagementController {
 //	@Autowired
 //	private AddEventInterface addEventInterface;
 	private List<String> fcms = new ArrayList<String>();
+	private List<String> memberList;
 	
 //	@Autowired
 //	FcmNotificationService fcmNotificationService;
+	public List<String >getCurrentMemberList()
+	{
+		return memberList;
+	}
 	
 	@GetMapping("/fcm")
 	public List<String> allFcms()
@@ -46,7 +51,7 @@ public class EventManagementController {
 		
 		//invoke Google FCM server to notify users
 		String members = event.getMemberList();
-		List<String> memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
+		memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
 		
 		/* memberList above has a list of Client numbers
 		 * We need to create another ArrayList<String> memberFcmList;

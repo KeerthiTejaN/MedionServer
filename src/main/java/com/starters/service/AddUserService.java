@@ -3,9 +3,11 @@ package com.starters.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starters.controller.EventManagementController;
 import com.starters.inf.AddUserInterface;
 import com.starters.model.User;
 
@@ -15,6 +17,10 @@ import com.starters.model.User;
 public class AddUserService{
 	
 	private final AddUserInterface adduserinterface;
+	
+
+	private EventManagementController eventManagementController = new EventManagementController();
+	private List<String> members = eventManagementController.getCurrentMemberList();
 	
 	public AddUserService(AddUserInterface adduserinterface)
 	{
@@ -36,7 +42,13 @@ public class AddUserService{
 		List<String> fcms = new ArrayList<>();
 		for(User user:adduserinterface.findAll())
 		{
-			fcms.add(user.getFcmToken());
+			for(int i=0;i<members.size();i++){
+				if(members.get(i) ==user.getPhone())
+				{
+					fcms.add(user.getFcmToken());
+				}
+			
+			}
 		}
 		return fcms;
 	}
