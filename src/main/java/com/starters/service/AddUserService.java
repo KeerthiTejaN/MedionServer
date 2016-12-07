@@ -19,8 +19,8 @@ public class AddUserService{
 	private final AddUserInterface adduserinterface;
 	
 
-	private EventManagementController eventManagementController = new EventManagementController();
-	private List<String> members = eventManagementController.getCurrentMemberList();
+//	private EventManagementController eventManagementController = new EventManagementController();
+//	private List<String> members = eventManagementController.getCurrentMemberList();
 	
 	public AddUserService(AddUserInterface adduserinterface)
 	{
@@ -37,7 +37,7 @@ public class AddUserService{
 		return users;
 	}
 	
-	public List<String> findAllFcmTokens()
+	public List<String> findAllFcmTokens(List<String> members)
 	{
 		List<String> fcms = new ArrayList<>();
 		for(User user:adduserinterface.findAll())

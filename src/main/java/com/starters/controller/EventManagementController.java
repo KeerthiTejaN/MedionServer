@@ -6,41 +6,55 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.starters.inf.AddUserInterface;
 //import com.starters.inf.AddEventInterface;
 import com.starters.model.Event;
-import com.starters.service.AddUserService;
+import com.starters.model.User;
 import com.starters.service.FcmNotificationService;
 
 @RestController
 public class EventManagementController {
 	
+	
 	@Autowired
-	private AddUserService adduserservice;
+	private AddUserInterface addUserInterface;
 	
 //	@Autowired
 //	private AddEventInterface addEventInterface;
-	private List<String> fcms = new ArrayList<String>();
+	private List<String> memberFcmTokenList;
 	private List<String> memberList;
 	
 //	@Autowired
 //	FcmNotificationService fcmNotificationService;
-	public List<String >getCurrentMemberList()
-	{
-		return memberList;
-	}
 	
-	@GetMapping("/fcm")
-	public List<String> allFcms()
+
+	
+	public List<String> findAllFcmTokens(List<String> memberList)
 	{
-		fcms = adduserservice.findAllFcmTokens();
-		return adduserservice.findAllFcmTokens();
+		System.out.println("yess");
+		List<String> fcms = new ArrayList<>();
+		for(User user:addUserInterface.findAll())
+		{
+			for(int i=0;i<memberList.size();i++){
+				if(memberList.get(i) ==user.getPhone())
+				{
+					System.out.println("yaaa");
+					fcms.add(user.getFcmToken());
+				}
+			
+			}
+		}
+		for(int i=0;i<fcms.size();i++)
+		{
+			System.out.println(fcms.get(i));
+		}
+		return fcms;
 	}
 	
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
@@ -52,6 +66,11 @@ public class EventManagementController {
 		//invoke Google FCM server to notify users
 		String members = event.getMemberList();
 		memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
+		System.out.println(memberList.size());
+		memberFcmTokenList = findAllFcmTokens(memberList);
+		System.out.println(memberFcmTokenList.size());
+		System.out.println(memberList.get(0));
+		System.out.println(memberList.get(1));
 		
 		/* memberList above has a list of Client numbers
 		 * We need to create another ArrayList<String> memberFcmList;
@@ -63,14 +82,14 @@ public class EventManagementController {
 		
 		StringBuilder message = new StringBuilder();
 		FcmNotificationService fcmNotificationService = new FcmNotificationService();
-		for(int i=0; i<memberList.size(); i++){
+		for(int i=0; i<memberFcmTokenList.size(); i++){
 			message.setLength(0);
-			message.append(memberList.get(i));
+			message.append(memberFcmTokenList.get(i));
 			message.append(event.getEventName()+"Event Created");
 			message.append("Date"+event.getEventDate());
 			message.append("Time"+event.getEventTime());
 			System.out.println(message.toString());
-			fcmNotificationService.notify(message.toString(), memberList.get(i));
+			fcmNotificationService.notify(message.toString(), memberFcmTokenList.get(i));
 		}
 		return "Notified";
 	}
