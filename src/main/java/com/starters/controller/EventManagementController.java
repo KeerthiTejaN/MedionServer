@@ -71,10 +71,14 @@ public class EventManagementController {
 		memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
 		memberFcmTokenList = findAllFcmTokens(memberList);
 		
+		//Send EventID along with Event details
+		
 		StringBuilder message = new StringBuilder();
 		FcmNotificationService fcmNotificationService = new FcmNotificationService();
 		for(int i=0; i<memberFcmTokenList.size(); i++){
 			message.setLength(0);
+			message.append("EventCreated"+",");
+			message.append("EventID"+",");
 			message.append(memberList.get(i)+",");
 			message.append(event.getEventName()+",");
 			message.append(event.getEventDate()+",");

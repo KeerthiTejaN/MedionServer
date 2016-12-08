@@ -44,6 +44,10 @@ public class User implements Serializable{
 		 
 	 }
 	 
+	
+	public int getId() {
+		return id;
+	}
 	public String getName() {
 		return name;
 	}

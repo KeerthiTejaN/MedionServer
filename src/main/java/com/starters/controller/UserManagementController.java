@@ -29,7 +29,6 @@ public class UserManagementController {
 	public @ResponseBody String addUser(@RequestBody User user){
 		
 		addUserInterface.save(user);
-		System.out.println("FCM: "+user.getFcmToken());
 		return "User Saved";
 	}
 	
