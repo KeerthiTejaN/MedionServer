@@ -29,33 +29,11 @@ public class EventManagementController {
 //	private AddEventInterface addEventInterface;
 	private List<String> memberFcmTokenList;
 	private List<String> memberList;
+	private List<User> userlist= new ArrayList<>();
 	
 //	@Autowired
 //	FcmNotificationService fcmNotificationService;
 	
-
-	
-	public List<String> findAllFcmTokens(List<String> memberList)
-	{
-		System.out.println("yess");
-		List<String> fcms = new ArrayList<>();
-		for(User user:addUserInterface.findAll())
-		{
-			for(int i=0;i<memberList.size();i++){
-				if(memberList.get(i) ==user.getPhone())
-				{
-					System.out.println("yaaa");
-					fcms.add(user.getFcmToken());
-				}
-			
-			}
-		}
-		for(int i=0;i<fcms.size();i++)
-		{
-			System.out.println(fcms.get(i));
-		}
-		return fcms;
-	}
 	
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
@@ -67,7 +45,6 @@ public class EventManagementController {
 		String members = event.getMemberList();
 		memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
 		System.out.println(memberList.size());
-		memberFcmTokenList = findAllFcmTokens(memberList);
 		System.out.println(memberFcmTokenList.size());
 		System.out.println(memberList.get(0));
 		System.out.println(memberList.get(1));
@@ -77,6 +54,18 @@ public class EventManagementController {
 		 * that contains FCMtokens of each client by fetching from DB */
 		
 		/*fcms is the list string that has all the client fcm tokens*/
+		for(int j=0;j<memberList.size();j++)
+		{
+			for(User user:addUserInterface.findAll())
+			{
+				System.out.println(user.getName());
+					if(user.getPhone().equals(memberList.get(j)))
+					{
+						System.out.println(user.getFcmToken());
+					}
+			}
+			
+		}
 		
 		
 		
