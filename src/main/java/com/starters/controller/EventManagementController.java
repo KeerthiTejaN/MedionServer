@@ -85,7 +85,7 @@ public class EventManagementController {
 			message.setLength(0);
 			message.append("EventCreated"+",");
 			//Fetching Event ID of the event stored in DB just above.
-			message.append(tempEvent.getId()+",");
+			message.append(Integer.toString(tempEvent.getId())+",");
 			message.append(event.getEventName()+",");
 			message.append(event.getEventDate()+",");
 			message.append(event.getEventTime()+",");
