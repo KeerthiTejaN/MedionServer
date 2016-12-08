@@ -1,5 +1,9 @@
 package com.starters.inf;
 
-public interface AddUserEventInterface {
+import org.springframework.data.repository.CrudRepository;
+
+import com.starters.model.UserEvent;
+
+public interface AddUserEventInterface extends CrudRepository<UserEvent, Integer>{
 
 }

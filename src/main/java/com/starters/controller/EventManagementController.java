@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starters.inf.AddEventInterface;
+import com.starters.inf.AddUserEventInterface;
 import com.starters.inf.AddUserInterface;
 //import com.starters.inf.AddEventInterface;
 import com.starters.model.Event;
@@ -30,14 +31,15 @@ public class EventManagementController {
 	@Autowired
 	private AddEventInterface addEventInterface;
 	
-//	@Autowired
-//	private AddEventInterface addEventInterface;
+	@Autowired
+	private AddUserEventInterface addUserEventInterface;
 	
 //	@Autowired
 //	FcmNotificationService fcmNotificationService;
 	
 	private List<String> memberFcmTokenList;
 	private List<String> memberList;
+	private Event tempEvent;
 	
 //	public <User> ArrayList<User> makeCollection(Iterable<User> iter) {
 //	    ArrayList<User> list = new ArrayList<User>();
@@ -68,7 +70,7 @@ public class EventManagementController {
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
 		
-		addEventInterface.save(event);
+		tempEvent = addEventInterface.save(event);
 		
 		//invoke Google FCM server to notify users
 		String members = event.getMemberList();
@@ -82,7 +84,8 @@ public class EventManagementController {
 		for(int i=0; i<memberFcmTokenList.size(); i++){
 			message.setLength(0);
 			message.append("EventCreated"+",");
-			message.append("EventID"+",");
+			//Fetching Event ID of the event stored in DB just above.
+			message.append(tempEvent.getId()+",");
 			message.append(event.getEventName()+",");
 			message.append(event.getEventDate()+",");
 			message.append(event.getEventTime()+",");
@@ -97,9 +100,10 @@ public class EventManagementController {
 	public @ResponseBody String addUserEventLocation(@RequestBody UserEvent userEvent){
 		
 		//code to save UserEvent object to UserEvent table
+		addUserEventInterface.save(userEvent);
 		
 		
-		return null;
+		return "Saved To UserEvent Table";
 	}
 	
 	

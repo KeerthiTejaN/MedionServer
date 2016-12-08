@@ -26,7 +26,11 @@ public class Event {
 	    @Column(name = "memberlist")
 	    private String memberList;
 	
-	    public String getEventName() {
+	    
+	    public int getId() {
+			return id;
+		}
+		public String getEventName() {
 	        return eventName;
 	    }
 	
