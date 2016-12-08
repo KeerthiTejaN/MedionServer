@@ -6,22 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-//@Entity(name ="Events")
+@Entity(name ="Events")
 public class Event {
 	
-//		@Id
-//		@GeneratedValue(strategy = GenerationType.IDENTITY,generator="event_id_seq")
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY,generator="event_id_seq")
+		@SequenceGenerator(name="event_id_seq",sequenceName="event_id_seq",allocationSize=1)
 		private int id;
-//		@Column(name = "eventname", nullable = false, length =512)
+		@Column(name = "eventName")
 	 	private String eventName;
-//	    @Column(name = "eventdate", nullable = false)
+	    @Column(name = "eventDate")
 		private String eventDate;
-//	    @Column(name = "eventtime", nullable = false)
+	    @Column(name = "eventTime")
 	    private String eventTime;
-//	    @Column(name = "memberlist")
+	    @Column(name = "memberList")
 	    private String memberList;
 	
 	    public String getEventName() {

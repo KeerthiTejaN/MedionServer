@@ -6,5 +6,4 @@ import com.starters.model.User;
 
 public interface AddUserInterface extends CrudRepository<User,Integer>{
 
-	//public void addUser(User user);
 }

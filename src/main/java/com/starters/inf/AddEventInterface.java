@@ -1,5 +1,9 @@
 package com.starters.inf;
 
-public interface AddEventInterface {
+import org.springframework.data.repository.CrudRepository;
+
+import com.starters.model.Event;
+
+public interface AddEventInterface extends CrudRepository<Event,Integer>{
 
 }

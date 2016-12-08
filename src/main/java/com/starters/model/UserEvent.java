@@ -1,13 +1,21 @@
 package com.starters.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity(name ="UserEvents")
 public class UserEvent {
 	
+	@Column(name = "eventId")
 	private int eventId;
+	@Column(name = "userFcmToken")
 	private String userFcmToken;
+	@Column(name = "acceptance")
 	private boolean acceptance;
+	@Column(name = "latitude")
 	private double latitude;
+	@Column(name = "longitude")
 	private double longitude;
-	
 	
 	public int getEventId() {
 		return eventId;
