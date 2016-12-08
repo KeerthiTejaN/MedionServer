@@ -27,32 +27,35 @@ public class EventManagementController {
 	
 //	@Autowired
 //	private AddEventInterface addEventInterface;
-	private List<String> memberFcmTokenList;
-	private List<String> memberList;
 	
 //	@Autowired
 //	FcmNotificationService fcmNotificationService;
 	
-
+	private List<String> memberFcmTokenList;
+	private List<String> memberList;
+	
+//	public <User> ArrayList<User> makeCollection(Iterable<User> iter) {
+//	    ArrayList<User> list = new ArrayList<User>();
+//	    for (User item : iter) {
+//	        list.add(item);
+//	    }
+//	    return list;
+//	}
+	
 	
 	public List<String> findAllFcmTokens(List<String> memberList)
 	{
-		System.out.println("yess");
-		List<String> fcms = new ArrayList<>();
-		for(User user:addUserInterface.findAll())
-		{
-			for(int i=0;i<memberList.size();i++){
-				if(memberList.get(i) ==user.getPhone())
-				{
-					System.out.println("yaaa");
+		List<String> fcms = new ArrayList<String>();
+//		ArrayList<User> users;
+//		users = makeCollection(addUserInterface.findAll());
+		for(int i=0; i<memberList.size(); i++){
+//			for(User user: users)
+			for(User user: addUserInterface.findAll())
+			{
+				if(memberList.get(i).equals(user.getPhone())){
 					fcms.add(user.getFcmToken());
 				}
-			
 			}
-		}
-		for(int i=0;i<fcms.size();i++)
-		{
-			System.out.println(fcms.get(i));
 		}
 		return fcms;
 	}
@@ -66,28 +69,16 @@ public class EventManagementController {
 		//invoke Google FCM server to notify users
 		String members = event.getMemberList();
 		memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
-		System.out.println(memberList.size());
 		memberFcmTokenList = findAllFcmTokens(memberList);
-		System.out.println(memberFcmTokenList.size());
-		System.out.println(memberList.get(0));
-		System.out.println(memberList.get(1));
-		
-		/* memberList above has a list of Client numbers
-		 * We need to create another ArrayList<String> memberFcmList;
-		 * that contains FCMtokens of each client by fetching from DB */
-		
-		/*fcms is the list string that has all the client fcm tokens*/
-		
-		
 		
 		StringBuilder message = new StringBuilder();
 		FcmNotificationService fcmNotificationService = new FcmNotificationService();
 		for(int i=0; i<memberFcmTokenList.size(); i++){
 			message.setLength(0);
-			message.append(memberFcmTokenList.get(i));
-			message.append(event.getEventName()+"Event Created");
-			message.append("Date"+event.getEventDate());
-			message.append("Time"+event.getEventTime());
+			message.append(memberList.get(i)+",");
+			message.append(event.getEventName()+",");
+			message.append(event.getEventDate()+",");
+			message.append(event.getEventTime()+",");
 			System.out.println(message.toString());
 			fcmNotificationService.notify(message.toString(), memberFcmTokenList.get(i));
 		}
