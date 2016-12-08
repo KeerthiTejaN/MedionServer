@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.starters.inf.AddEventInterface;
 import com.starters.inf.AddUserInterface;
 //import com.starters.inf.AddEventInterface;
 import com.starters.model.Event;
@@ -24,6 +25,9 @@ public class EventManagementController {
 	
 	@Autowired
 	private AddUserInterface addUserInterface;
+	
+	@Autowired
+	private AddEventInterface addEventInterface;
 	
 //	@Autowired
 //	private AddEventInterface addEventInterface;
@@ -63,8 +67,7 @@ public class EventManagementController {
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
 		
-		//Write logic to save Event object here
-//		addEventInterface.save(event);
+		addEventInterface.save(event);
 		
 		//invoke Google FCM server to notify users
 		String members = event.getMemberList();

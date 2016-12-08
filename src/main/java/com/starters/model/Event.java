@@ -17,13 +17,13 @@ public class Event {
 		@GeneratedValue(strategy = GenerationType.IDENTITY,generator="event_id_seq")
 		@SequenceGenerator(name="event_id_seq",sequenceName="event_id_seq",allocationSize=1)
 		private int id;
-		@Column(name = "eventName")
+		@Column(name = "eventname")
 	 	private String eventName;
-	    @Column(name = "eventDate")
+	    @Column(name = "eventdate")
 		private String eventDate;
-	    @Column(name = "eventTime")
+	    @Column(name = "eventtime")
 	    private String eventTime;
-	    @Column(name = "memberList")
+	    @Column(name = "memberlist")
 	    private String memberList;
 	
 	    public String getEventName() {
