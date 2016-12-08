@@ -16,6 +16,7 @@ import com.starters.inf.AddUserInterface;
 //import com.starters.inf.AddEventInterface;
 import com.starters.model.Event;
 import com.starters.model.User;
+import com.starters.model.UserEvent;
 import com.starters.service.FcmNotificationService;
 
 @RestController
@@ -79,14 +80,23 @@ public class EventManagementController {
 			message.setLength(0);
 			message.append("EventCreated"+",");
 			message.append("EventID"+",");
-			message.append(memberList.get(i)+",");
 			message.append(event.getEventName()+",");
 			message.append(event.getEventDate()+",");
 			message.append(event.getEventTime()+",");
+			message.append(members);
 			System.out.println(message.toString());
 			fcmNotificationService.notify(message.toString(), memberFcmTokenList.get(i));
 		}
 		return "Notified";
+	}
+	
+	@RequestMapping(value="/api/addUserEvent", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String addUserEventLocation(@RequestBody UserEvent userEvent){
+		
+		//code to save UserEvent object to UserEvent table
+		
+		
+		return null;
 	}
 	
 	
