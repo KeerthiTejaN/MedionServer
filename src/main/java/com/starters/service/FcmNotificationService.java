@@ -24,13 +24,15 @@ public class FcmNotificationService {
             // Prepare JSON containing the FCM message content. What to send and where to send.
             JSONObject jGcmData = new JSONObject();
             JSONObject jData = new JSONObject();
+//            jData.accumulate("message", message);
             jData.put("message", message);
             
             // Whom to send FCM message.
-//            jGcmData.put("to", "ezEWc9FsCmE:APA91bGl6Utzr3vUJnLh1ZPNJgD_zjSUcrML9JdtgYXHUivYreAh1YvnPnhx19c8DwK3hrpEgS8A8CknZJd_eJVzvF2yZ7iHChjop4ccElG2d_F8lDTWQEfEmfJbDZ16JNgK6q3pmaJi");
+//            jGcmData.accumulate("to", "ezEWc9FsCmE:APA91bGl6Utzr3vUJnLh1ZPNJgD_zjSUcrML9JdtgYXHUivYreAh1YvnPnhx19c8DwK3hrpEgS8A8CknZJd_eJVzvF2yZ7iHChjop4ccElG2d_F8lDTWQEfEmfJbDZ16JNgK6q3pmaJi");
            jGcmData.put("to", fcmToken);
             // What to send in FCM message.
             jGcmData.put("data", jData);
+//            jGcmData.accumulate("data", jData);
 
             // Create connection to send FCM Message request.
             URL url = new URL("https://fcm.googleapis.com/fcm/send");

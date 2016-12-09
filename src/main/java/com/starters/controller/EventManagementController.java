@@ -91,9 +91,10 @@ public class EventManagementController {
 			message.append(event.getEventTime()+",");
 			message.append(members);
 			System.out.println(message.toString());
+			System.out.println(memberFcmTokenList.get(i));
 			fcmNotificationService.notify(message.toString(), memberFcmTokenList.get(i));
 		}
-		return "Notified";
+		return "Integer.toString(tempEvent.getId())";
 	}
 	
 	@RequestMapping(value="/api/addUserEvent", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
