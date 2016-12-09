@@ -6,7 +6,7 @@ import com.starters.model.Coordinates;
 
 public class CalculateMedianService {
 	
-	public static Coordinates getMedian(List<Coordinates> coordinateList) {
+	public Coordinates getMedian(List<Coordinates> coordinateList) {
 
 		double latitude;
 		double longitude;

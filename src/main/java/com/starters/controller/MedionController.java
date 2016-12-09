@@ -38,20 +38,23 @@ public class MedionController {
 }
 
 	@RequestMapping(value="/api/calcMedian", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
-	public @ResponseBody String calcMedian(@RequestBody int eventID){
+	public @ResponseBody String calcMedian(@RequestBody String eventID){
+		int eventid = Integer.parseInt(eventID);
+		System.out.println("EventID "+eventid);
 		List<Coordinates> coordinateList = new ArrayList<Coordinates>();
 		List<Integer> input = new ArrayList<Integer>();
-		input.add(eventID);
+		input.add(eventid);
 		addUserEventInterface.findAll(input);
 		ArrayList<UserEvent> userEvents;
 		userEvents = makeCollection(addUserEventInterface.findAll());
+		System.out.println("Number of members:"+userEvents.size());
 		for(int i=0; i<userEvents.size(); i++){
 			coordinate.setLatitude(Double.parseDouble(userEvents.get(i).getLatitude()));
 			coordinate.setLongitude(Double.parseDouble(userEvents.get(i).getLongitude()));
 			coordinateList.add(coordinate);
 		}
 		coordinate = calculateMedionService.getMedian(coordinateList);
-		
+		System.out.println(coordinate.getLatitude()+" : "+coordinate.getLongitude());
 		
 		return "MedianCalculated";
 	}
