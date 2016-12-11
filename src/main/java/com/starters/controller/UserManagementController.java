@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starters.inf.AddUserInterface;
 import com.starters.model.User;
+import com.starters.service.LoginService;
 
 @RestController
 public class UserManagementController {
 
 	@Autowired
 	AddUserInterface addUserInterface;
+	
+	@Autowired
+	LoginService login;
 	
 	@RequestMapping(value="/api/verify", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String display(){
@@ -30,6 +34,14 @@ public class UserManagementController {
 		
 		addUserInterface.save(user);
 		return "User Saved";
+	}
+
+	@RequestMapping(value="/api/login", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String login(@RequestBody User user){
+		System.out.println("Inside login");
+		
+		String result = login.loginCheck(user.getPhone(),user.getPassword());
+		return result;
 	}
 	
 }
