@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.starters.inf.AddUserEventInterface;
 import com.starters.model.Coordinates;
 import com.starters.model.Eid;
+import com.starters.model.EventMedian;
 import com.starters.model.UserEvent;
 import com.starters.service.CalculateMedianService;
 import com.starters.service.FcmNotificationService;
@@ -75,6 +76,19 @@ public class MedionController {
 		}
 		
 		return "MedianCalculated";
+		
+	}
+	
+	@RequestMapping(value="/api/sendMedian", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String sendMedion(@RequestBody EventMedian eventMedion){
+		fcmNotificationService = new FcmNotificationService();
+		List<UserEvent> userEvents;
+		userEvents = findSpecificUserEvents(eventMedion.getEventID());
+		for(int i=0; i<userEvents.size(); i++){
+			fcmNotificationService.notify("FinalPlace,"+eventMedion.getLatitude()+","+Double.toString(coordinate.getLongitude()), userEvents.get(i).getUserFcmToken());
+		}
+		
+		return null;
 		
 	}
 	
