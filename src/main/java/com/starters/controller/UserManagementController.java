@@ -1,6 +1,9 @@
 package com.starters.controller;
 
 
+import java.util.ArrayList;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,12 +39,14 @@ public class UserManagementController {
 		return "User Saved";
 	}
 
-	@RequestMapping(value="/api/login", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
-	public @ResponseBody String login(@RequestBody User user){
+	@RequestMapping(value="/api/login", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String login(@RequestBody JSONObject obj){
 		System.out.println("Inside login");
-		
-		String result = login.loginCheck(user.getPhone(),user.getPassword());
+		String phone=obj.get("username").toString();
+		String pass = obj.get("password").toString();
+		String result =login.loginCheck(phone, pass);
 		return result;
+		
 	}
 	
 }
