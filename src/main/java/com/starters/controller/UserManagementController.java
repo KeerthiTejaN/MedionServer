@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,13 +40,10 @@ public class UserManagementController {
 		return "User Saved";
 	}
 
-	@RequestMapping(value="/api/login", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
-	public @ResponseBody String login(@RequestBody JSONObject obj){
+	@RequestMapping(value="/api/login", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String login(@RequestParam String name,@RequestParam String pass){
 		System.out.println("Inside login");
-		String phone=obj.get("username").toString();
-		String pass = obj.get("password").toString();
-		String result =login.loginCheck(phone, pass);
-		return result;
+		return login.loginCheck(name,pass);
 		
 	}
 	
