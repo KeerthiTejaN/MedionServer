@@ -40,6 +40,7 @@ public class UserManagementController {
 	public @ResponseBody String addUser(@RequestBody User user){
 		
 		addUserInterface.save(user);
+		System.out.println("user added");
 		return "User Saved";
 	}
 

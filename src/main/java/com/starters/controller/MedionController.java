@@ -72,6 +72,7 @@ public class MedionController {
 		}
 		coordinate = calculateMedionService.getMedian(coordinateList);
 		String coor= Double.toString(coordinate.getLatitude())+","+Double.toString(coordinate.getLongitude());
+		System.out.println(coordinate.getLatitude()+","+coordinate.getLongitude());
 		System.out.println(coor);
 		HttpURLConnectionExample httpurlconnection = new HttpURLConnectionExample(coor,"5000","restaurant","good");
 		try {

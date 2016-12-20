@@ -46,7 +46,7 @@ public class HttpURLConnectionExample {
 
 		
 		String url = mainURL+latlongs+radius+actualRadius+type+actualType+keyword+actualKeyword+keystring+key;
-
+		System.out.println("point1");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -59,25 +59,31 @@ public class HttpURLConnectionExample {
 		int responseCode = con.getResponseCode();
 		System.out.println("\nSending 'GET' request to URL : " + url);
 		System.out.println("Response Code : " + responseCode);
+		System.out.println("point2");
 
 	    BufferedReader streamReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 	    StringBuilder responseStrBuilder = new StringBuilder();
 
+	    System.out.println("point3");
 	    String inputStr;
 	    while ((inputStr = streamReader.readLine()) != null)
 	        responseStrBuilder.append(inputStr);
 	    json = responseStrBuilder.toString();
+	    System.out.println(json);
 	    streamReader.close();
+	    con.disconnect();
 	    Gson gson= new Gson();
 	    LocationJson locationjson = gson.fromJson(json,LocationJson.class);
 	    Random random =new Random();
+	    System.out.println(locationjson.getResults().length);
+
 	    int n = random.nextInt(locationjson.getResults().length);
 	    	
 	    	finallats=locationjson.getResults()[n].getGeometry().getLocation().getLat();
 	    	finallongs=locationjson.getResults()[n].getGeometry().getLocation().getLng();
 	    	return finallats+","+finallongs;
 	    
-	    
+	   
 	}
 	
 }
