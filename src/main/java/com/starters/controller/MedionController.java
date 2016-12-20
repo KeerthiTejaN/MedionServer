@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.starters.HttpURLConnectionExample;
 import com.starters.inf.AddUserEventInterface;
 import com.starters.model.Coordinates;
 import com.starters.model.Eid;
@@ -33,6 +34,7 @@ public class MedionController {
 	private CalculateMedianService calculateMedionService;
 	private FcmNotificationService fcmNotificationService;
 	private UserEvent userEvent;
+	private String finalres;
 	
 	public <UserEvent> ArrayList<UserEvent> makeCollection(Iterable<UserEvent> iter) {
     ArrayList<UserEvent> list = new ArrayList<UserEvent>();
@@ -69,13 +71,23 @@ public class MedionController {
 			coordinateList.add(coordinate);
 		}
 		coordinate = calculateMedionService.getMedian(coordinateList);
-		System.out.println(coordinate.getLatitude()+" : "+coordinate.getLongitude());
+		String coor= coordinate.getLatitude()+","+coordinate.getLongitude();
+		System.out.println(coor);
+		HttpURLConnectionExample httpurlconnection = new HttpURLConnectionExample(coor,"5000","restaurant","good");
+		try {
+				finalres = httpurlconnection.sendGet();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String evid= Integer.toString(eventid); 
+		String med[] =finalres.split(",");
 		
 		for(int i=0; i<userEvents.size(); i++){
-			fcmNotificationService.notify("MedionCalculated,"+Double.toString(coordinate.getLatitude())+","+Double.toString(coordinate.getLongitude()), userEvents.get(i).getUserFcmToken());
+			fcmNotificationService.notify("MedionCalculated,"+med[0]+","+med[1]+","+evid, userEvents.get(i).getUserFcmToken());
 		}
 		
-		return "MedianCalculated";
+		return finalres;
 		
 	}
 	

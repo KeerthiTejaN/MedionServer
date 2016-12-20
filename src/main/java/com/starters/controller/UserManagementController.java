@@ -3,6 +3,9 @@ package com.starters.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -44,6 +47,8 @@ public class UserManagementController {
 	public @ResponseBody String login(@RequestParam String name,@RequestParam String pass){
 		System.out.println("Inside login");
 		return login.loginCheck(name,pass);
+
+		 
 		
 	}
 	
