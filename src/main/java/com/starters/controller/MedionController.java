@@ -70,8 +70,15 @@ public class MedionController {
 			coordinate.setLongitude(Double.parseDouble(userEvents.get(i).getLongitude()));
 			coordinateList.add(coordinate);
 		}
+		String coor;
 		coordinate = calculateMedionService.getMedian(coordinateList);
-		String coor= Double.toString(coordinate.getLatitude())+","+Double.toString(coordinate.getLongitude());
+		if(coordinate.getLatitude()==0.0&& coordinate.getLongitude()==0.0 ){
+			coor=Double.toString(39.768597)+","+Double.toString(-86.162682);
+		}
+		else
+		{
+			coor= Double.toString(coordinate.getLatitude())+","+Double.toString(coordinate.getLongitude());
+		}
 		System.out.println(coordinate.getLatitude()+","+coordinate.getLongitude());
 		System.out.println(coor);
 		HttpURLConnectionExample httpurlconnection = new HttpURLConnectionExample(coor,"5000","restaurant","good");
