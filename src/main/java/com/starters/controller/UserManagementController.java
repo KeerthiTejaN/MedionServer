@@ -41,7 +41,7 @@ public class UserManagementController {
 		
 		addUserInterface.save(user);
 		System.out.println("user added");
-		return "User Saved";
+		return "USER SAVED";
 	}
 
 	@RequestMapping(value="/api/login", method=RequestMethod.GET, produces=MediaType.TEXT_PLAIN_VALUE)

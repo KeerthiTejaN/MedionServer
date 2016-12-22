@@ -69,8 +69,30 @@ public class EventManagementController {
 	
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
-		
+		String[] parts =event.getEventTime().split("/");
+		event.setEventTime(parts[0]);
+		String[] userlatlongs = parts[1].split(",");
 		tempEvent = addEventInterface.save(event);
+		String lat = userlatlongs[0];
+		String longs= userlatlongs[1];
+		String phonenum = userlatlongs[2];	
+		String fcm=null;
+		for(User user:addUserInterface.findAll())
+		{
+			if(user.getPhone().equals(phonenum))
+			{
+				fcm = user.getFcmToken();
+			}
+		}
+		int event_id= tempEvent.getId();
+		UserEvent userevent = new UserEvent();
+		userevent.setAcceptance(true);
+		userevent.setEventId(event_id);
+		userevent.setLatitude(lat);
+		userevent.setLongitude(longs);
+		userevent.setUserFcmToken(fcm);
+		addUserEventInterface.save(userevent);
+
 		
 		//invoke Google FCM server to notify users
 		String members = event.getMemberList();
