@@ -82,7 +82,7 @@ public class HttpURLConnectionExample {
 	    	
 	    	finallats=locationjson.getResults()[n].getGeometry().getLocation().getLat();
 	    	finallongs=locationjson.getResults()[n].getGeometry().getLocation().getLng();
-	    	place_id=locationjson.getResults()[n].getName()+"!"+locationjson.getResults()[n].getRating()+"!"+locationjson.getResults()[n].getOpening_hours();
+	    	place_id=locationjson.getResults()[n].getName()+"!"+locationjson.getResults()[n].getRating()+"!"+locationjson.getResults()[n].getOpening_hours().getOpen_now();
 	    	return finallats+","+finallongs+","+place_id;
 	    
 	   
