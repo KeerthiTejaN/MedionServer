@@ -31,6 +31,7 @@ public class HttpURLConnectionExample {
 	private String json;
 	private String finallats;
 	private String finallongs;
+	private String place_id;
 
 	
 	public HttpURLConnectionExample(String s,String rad,String type,String keyword)
@@ -81,7 +82,8 @@ public class HttpURLConnectionExample {
 	    	
 	    	finallats=locationjson.getResults()[n].getGeometry().getLocation().getLat();
 	    	finallongs=locationjson.getResults()[n].getGeometry().getLocation().getLng();
-	    	return finallats+","+finallongs;
+	    	place_id=locationjson.getResults()[n].getPlace_id();
+	    	return finallats+","+finallongs+","+place_id;
 	    
 	   
 	}

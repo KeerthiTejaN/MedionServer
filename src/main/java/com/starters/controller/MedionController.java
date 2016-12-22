@@ -92,7 +92,7 @@ public class MedionController {
 		String med[] =finalres.split(",");
 		
 		for(int i=0; i<userEvents.size(); i++){
-			fcmNotificationService.notify("MedionCalculated,"+med[0]+","+med[1]+","+evid, userEvents.get(i).getUserFcmToken());
+			fcmNotificationService.notify("MedionCalculated,"+med[0]+","+med[1]+"/"+med[2]+","+evid, userEvents.get(i).getUserFcmToken());
 		}
 		
 		return finalres;

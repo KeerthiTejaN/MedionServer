@@ -71,11 +71,16 @@ public class EventManagementController {
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
 		String[] parts =event.getEventTime().split("/");
 		event.setEventTime(parts[0]);
+		System.out.println(parts[0]);
 		String[] userlatlongs = parts[1].split(",");
 		tempEvent = addEventInterface.save(event);
 		String lat = userlatlongs[0];
 		String longs= userlatlongs[1];
 		String phonenum = userlatlongs[2];	
+		System.out.println("admin lat:"+lat);
+		System.out.println("admin long:"+longs);
+		System.out.println("admin phone:"+phonenum);
+		System.out.println("event id:"+tempEvent.getId());
 		String fcm=null;
 		for(User user:addUserInterface.findAll())
 		{
