@@ -24,9 +24,12 @@ public class FcmNotificationService {
             // Prepare JSON containing the FCM message content. What to send and where to send.
             JSONObject jGcmData = new JSONObject();
             JSONObject jData = new JSONObject();
+            JSONObject jRData = new JSONObject();
 //            jData.accumulate("message", message);
             jData.put("body", message);
             jData.put("title", "Medion");
+            
+            jRData.put("message", message);
             
             
             // Whom to send FCM message.
@@ -34,6 +37,8 @@ public class FcmNotificationService {
            jGcmData.put("to", fcmToken);
             // What to send in FCM message.
             jGcmData.put("notification", jData);
+            
+            jGcmData.put("data", jRData);
 //            jGcmData.accumulate("data", jData);
 
             // Create connection to send FCM Message request.
