@@ -79,7 +79,7 @@ public class EventManagementController {
 		String phonenum = userlatlongs[2];	
 		System.out.println("admin lat:"+lat);
 		System.out.println("admin long:"+longs);
-		System.out.println("admin phone:"+phonenum);
+		System.out.println("admin phone:"+phonenum+":");
 		System.out.println("event id:"+tempEvent.getId());
 		String fcm=null;
 		for(User user:addUserInterface.findAll())
