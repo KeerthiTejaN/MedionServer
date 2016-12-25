@@ -28,6 +28,7 @@ public class FcmNotificationService {
 //            jData.accumulate("message", message);
             jData.put("body", message);
             jData.put("title", "Medion");
+            jData.put("click_action", "DECISION_ACTIVITY");
             
             jRData.put("message", message);
             
