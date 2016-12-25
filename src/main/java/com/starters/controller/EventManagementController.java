@@ -87,8 +87,10 @@ public class EventManagementController {
 			if(user.getPhone().equals(phonenum))
 			{
 				fcm = user.getFcmToken();
+				System.out.println("matched!");
 			}
 		}
+		System.out.println("The matched phone number's fcm token is:"+fcm);
 		int event_id= tempEvent.getId();
 		UserEvent userevent = new UserEvent();
 		userevent.setAcceptance(true);
