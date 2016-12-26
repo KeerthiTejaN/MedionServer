@@ -148,14 +148,14 @@ public class EventManagementController {
 		String members=null;
 		for(UserEvent userevent:addUserEventInterface.findAll())
 		{
-			if(Integer.toString(userevent.getEventId())==eventId)
+			if(Integer.toString(userevent.getEventId()).equals(eventId))
 			{
 				addUserEventInterface.delete(userevent);
 			}
 		}
 		for(Event event:addEventInterface.findAll())
 		{
-			if(Integer.toString(event.getId())==eventId)
+			if(Integer.toString(event.getId()).equals(eventId))
 			{
 				members = event.getMemberList();
 				addEventInterface.delete(event);
