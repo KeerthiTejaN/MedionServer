@@ -144,6 +144,7 @@ public class EventManagementController {
 	public @ResponseBody String delEvent(@RequestBody Delid delid)
 	{
 		String eventId = delid.getId();
+		System.out.println(eventId);
 		String members=null;
 		for(UserEvent userevent:addUserEventInterface.findAll())
 		{
