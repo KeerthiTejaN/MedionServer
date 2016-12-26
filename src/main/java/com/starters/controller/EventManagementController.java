@@ -140,7 +140,7 @@ public class EventManagementController {
 		return "Saved To UserEvent Table";
 	}
 	
-	@RequestMapping(value="/api/delEvent",method=RequestMethod.POST, produces= MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value="/serv/delevent",method=RequestMethod.POST, produces= MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String delEvent(@RequestBody Delid delid)
 	{
 		String eventId = delid.getId();
@@ -183,7 +183,7 @@ public class EventManagementController {
 		return "Successfully deleted event with id: "+eventId;
 	}
 	
-	@RequestMapping(value="/api/delMember",method=RequestMethod.POST, produces= MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value="/serv/delmember",method=RequestMethod.POST, produces= MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String delMember(@RequestBody Delid delidx)
 	{
 	String userphone = delidx.getId();
