@@ -87,6 +87,7 @@ public class EventManagementController {
 				String currentmem = eve.getMemberList();
 				String newmem = currentmem+","+members;
 				eve.setMemberList(newmem);
+				addEventInterface.save(eve);
 				newmembers = eve.getMemberList();
 			}
 		}		
