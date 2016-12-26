@@ -69,6 +69,54 @@ public class EventManagementController {
 		return fcms;
 	}
 	
+	@RequestMapping(value="/api/notifyNewMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String notifyNewMembers(@RequestBody Event event){
+		
+		String members = event.getMemberList();
+		String newmembers=null;
+	
+		String evename = event.getEventName();
+		String time = event.getEventTime();
+		String date = event.getEventDate();
+		String id = Integer.toString(event.getId());
+		for(Event eve:addEventInterface.findAll())
+		{
+			if(Integer.toString(eve.getId()).equals(id))
+			{
+				String currentmem = eve.getMemberList();
+				String newmem = currentmem+","+members;
+				eve.setMemberList(newmem);
+				newmembers = eve.getMemberList();
+			}
+		}		
+		memberList = new ArrayList<String>(Arrays.asList(members.split(",")));
+		memberFcmTokenList = findAllFcmTokens(memberList);
+		
+		//Send EventID along with Event details
+		
+		StringBuilder message = new StringBuilder();
+		FcmNotificationService fcmNotificationService = new FcmNotificationService();
+		for(int i=0; i<memberFcmTokenList.size(); i++){
+			message.setLength(0);
+			message.append("EventCreated"+",");
+			//Fetching Event ID of the event stored in DB just above.
+			message.append(id+",");
+			message.append(evename+",");
+			message.append(date+",");
+			message.append(time+",");
+			message.append(newmembers);
+			System.out.println(message.toString());
+			System.out.println(memberFcmTokenList.get(i));
+			fcmNotificationService.notify(message.toString(), memberFcmTokenList.get(i));
+			
+		}
+		String responseFromServer = "New Members Notified";
+		return responseFromServer;
+	}
+	
+	
+	
+	
 	@RequestMapping(value="/api/notifyMembers", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
 	public @ResponseBody String notifyMembers(@RequestBody Event event){
 		String[] parts =event.getEventTime().split("/");
@@ -192,6 +240,7 @@ public class EventManagementController {
 	String phone = parts[0];
 	String eventId = parts[1];
 	String userfcm =null;
+	String adminfcm =null;
 	for(User userx:addUserInterface.findAll())
 	{
 		if(userx.getPhone().equals(phone))
@@ -230,8 +279,41 @@ public class EventManagementController {
 			return "Can't find the record of your registration to this event!";
 		}
 	}
+	for(UserEvent userevent:addUserEventInterface.findAll())
+	{
+		if(Integer.toString(userevent.getEventId()).equals(eventId))
+		{
+			adminfcm = userevent.getUserFcmToken();
+			break;
+		}
+	}
+	String message = "Member with Phone: "+phone+" dropped out! Please recalculate medion with pick places again.!";
+	FcmNotificationService fcmNotificationService = new FcmNotificationService();
+	fcmNotificationService.notify(message, adminfcm);
 	return "Successfully deleted you from this event!";
 	}
+	
+	@RequestMapping(value="/api/finEvent", method=RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String finEvent(@RequestBody Delid delid){
+		System.out.println("inside finevent");
+		FcmNotificationService fcmNotificationService = new FcmNotificationService();
+		String[] evedetails = delid.getId().split("!");
+		String eveid = evedetails[0];
+		String evefinlatlongs = evedetails[1];
+		String evemem = evedetails[2];
+		for(UserEvent userevent:addUserEventInterface.findAll())
+		{
+			if(Integer.toString(userevent.getEventId()).equals(eveid))
+			{
+				fcmNotificationService.notify("Event Finalized!"+eveid+"!With members= !"+evemem+"! at latlongs= !"+evefinlatlongs, userevent.getUserFcmToken());
+			}
+		
+		return "Event Finalized!";
+		}
+		return null;
+		
+	}
+	
 	
 }
 
