@@ -224,7 +224,7 @@ public class EventManagementController {
 		FcmNotificationService fcmNotificationService = new FcmNotificationService();
 		for(int i=0; i<memberFcmTokenList.size(); i++){
 			message.setLength(0);
-			message.append("Event with id:"+eventId+" deleted");
+			message.append("Event with id,"+eventId+",deleted");
 			//Fetching Event ID of the event stored in DB just above.
 			System.out.println(message.toString());
 			System.out.println(memberFcmTokenList.get(i));
@@ -241,6 +241,7 @@ public class EventManagementController {
 	String [] parts = userphone.split("!");
 	String phone = parts[0];
 	String eventId = parts[1];
+	System.out.println(phone+":"+eventId);
 	String userfcm =null;
 	String adminfcm =null;
 	for(User userx:addUserInterface.findAll())
@@ -250,6 +251,7 @@ public class EventManagementController {
 			userfcm =userx.getFcmToken();
 		}
 	}
+	System.out.println(userfcm);
 	for(Event event:addEventInterface.findAll())
 	{
 		if(Integer.toString(event.getId()).equals(eventId))
@@ -268,12 +270,15 @@ public class EventManagementController {
 			}
 			newmembers.setLength(newmembers.length()-1);
 			event.setMemberList(newmembers.toString());
+			System.out.println("new member list:"+newmembers);
+			addEventInterface.save(event);
 			}
 		}
 	for(UserEvent userevent:addUserEventInterface.findAll())
 	{
 		if(Integer.toString(userevent.getEventId()).equals(eventId)&&userevent.getUserFcmToken().equals(userfcm))
 		{
+			System.out.println("inside deleting userevent of member deleted!");
 			addUserEventInterface.delete(userevent);
 		}
 		else
@@ -289,7 +294,7 @@ public class EventManagementController {
 			break;
 		}
 	}
-	String message = "Member with Phone: "+phone+" dropped out! Please recalculate medion with pick places again.!";
+	String message = "Member with Phone,"+phone+","+eventId+",dropped out! Please recalculate medion with pick places again.!";
 	FcmNotificationService fcmNotificationService = new FcmNotificationService();
 	fcmNotificationService.notify(message, adminfcm);
 	return "Successfully deleted you from this event!";
