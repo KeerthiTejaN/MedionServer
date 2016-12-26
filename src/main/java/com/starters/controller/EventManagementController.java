@@ -76,9 +76,10 @@ public class EventManagementController {
 		String newmembers=null;
 	
 		String evename = event.getEventName();
-		String time = event.getEventTime();
+		String [] times = event.getEventTime().split("/");
+		String time = times[0];
+		String id=times[1];
 		String date = event.getEventDate();
-		String id = Integer.toString(event.getId());
 		for(Event eve:addEventInterface.findAll())
 		{
 			if(Integer.toString(eve.getId()).equals(id))
