@@ -27,9 +27,7 @@ public class FcmNotificationService {
             JSONObject jRData = new JSONObject();
 //            jData.accumulate("message", message);
             jData.put("body", message);
-            jData.put("title", "Medion");
-            jData.put("click_action", "DECISION_ACTIVITY");
-            
+            jData.put("title", "Medion");            
             jRData.put("message", message);
             
             

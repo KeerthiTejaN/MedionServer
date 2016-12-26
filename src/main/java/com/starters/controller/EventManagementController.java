@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.starters.inf.AddEventInterface;
 import com.starters.inf.AddUserEventInterface;
 import com.starters.inf.AddUserInterface;
+import com.starters.model.Delid;
 //import com.starters.inf.AddEventInterface;
 import com.starters.model.Event;
 import com.starters.model.User;
@@ -39,6 +40,7 @@ public class EventManagementController {
 	
 	private List<String> memberFcmTokenList;
 	private List<String> memberList;
+	private List<String> delMemberList;
 	private Event tempEvent;
 	
 //	public <User> ArrayList<User> makeCollection(Iterable<User> iter) {
@@ -138,6 +140,97 @@ public class EventManagementController {
 		return "Saved To UserEvent Table";
 	}
 	
+	@RequestMapping(value="/api/delEvent",method=RequestMethod.POST, produces= MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String delEvent(@RequestBody Delid delid)
+	{
+		String eventId = delid.getId();
+		String members=null;
+		for(UserEvent userevent:addUserEventInterface.findAll())
+		{
+			if(Integer.toString(userevent.getEventId())==eventId)
+			{
+				addUserEventInterface.delete(userevent);
+			}
+		}
+		for(Event event:addEventInterface.findAll())
+		{
+			if(Integer.toString(event.getId())==eventId)
+			{
+				members = event.getMemberList();
+				addEventInterface.delete(event);
+			}
+		}
+		try
+		{
+		delMemberList = new ArrayList<String>(Arrays.asList(members.split(",")));
+		memberFcmTokenList = findAllFcmTokens(delMemberList);
+		}
+		catch(Exception e)
+		{
+			return "Event cannot be found!";
+		}
+		StringBuilder message = new StringBuilder();
+		FcmNotificationService fcmNotificationService = new FcmNotificationService();
+		for(int i=0; i<memberFcmTokenList.size(); i++){
+			message.setLength(0);
+			message.append("Event with id:"+eventId+" deleted");
+			//Fetching Event ID of the event stored in DB just above.
+			System.out.println(message.toString());
+			System.out.println(memberFcmTokenList.get(i));
+			fcmNotificationService.notify(message.toString(), memberFcmTokenList.get(i));
+		
+		}
+		return "Successfully deleted event with id: "+eventId;
+	}
+	
+	@RequestMapping(value="/api/delMember",method=RequestMethod.POST, produces= MediaType.TEXT_PLAIN_VALUE)
+	public @ResponseBody String delMember(@RequestBody Delid delidx)
+	{
+	String userphone = delidx.getId();
+	String [] parts = userphone.split("!");
+	String phone = parts[0];
+	String eventId = parts[1];
+	String userfcm =null;
+	for(User userx:addUserInterface.findAll())
+	{
+		if(userx.getPhone().equals(phone))
+		{
+			userfcm =userx.getFcmToken();
+		}
+	}
+	for(Event event:addEventInterface.findAll())
+	{
+		if(Integer.toString(event.getId()).equals(eventId))
+		{
+			String s =event.getMemberList();
+			String [] members=s.split(",");
+			StringBuilder newmembers = new StringBuilder();
+			for(int i=0;i<members.length;i++)
+			{
+				if(members[i].equals(phone))
+				{}
+				else
+				{
+					newmembers.append(members[i]+",");
+				}
+			}
+			newmembers.setLength(newmembers.length()-1);
+			event.setMemberList(newmembers.toString());
+			}
+		}
+	for(UserEvent userevent:addUserEventInterface.findAll())
+	{
+		if(Integer.toString(userevent.getEventId()).equals(eventId)&&userevent.getUserFcmToken().equals(userfcm))
+		{
+			addUserEventInterface.delete(userevent);
+		}
+		else
+		{
+			return "Can't find the record of your registration to this event!";
+		}
+	}
+	return "Successfully deleted you from this event!";
+	}
 	
 }
 
