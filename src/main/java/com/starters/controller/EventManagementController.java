@@ -262,13 +262,18 @@ public class EventManagementController {
 			for(int i=0;i<members.length;i++)
 			{
 				if(members[i].equals(phone))
-				{}
+				{
+				}
 				else
 				{
 					newmembers.append(members[i]+",");
 				}
 			}
-//			newmembers.setLength(newmembers.length()-1);
+			if(newmembers.length()==0)
+			{}
+			else
+			{
+			newmembers.setLength(newmembers.length()-1);}
 			event.setMemberList(newmembers.toString());
 			System.out.println("new member list:"+newmembers);
 			addEventInterface.save(event);
