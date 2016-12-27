@@ -281,11 +281,9 @@ public class EventManagementController {
 		}
 	for(UserEvent userevent:addUserEventInterface.findAll())
 	{
-		System.out.println(Integer.parseInt("comparing factor:"+eventId));
-		System.out.println(userevent.getEventId());	
-		System.out.println("comparing factor ; "+userfcm);
+		System.out.println(Integer.toString(userevent.getEventId()));
 		System.out.println(userevent.getUserFcmToken());
-		if(userevent.getEventId()==Integer.parseInt(eventId)&&userevent.getUserFcmToken().equals(userfcm))
+		if(Integer.toString(userevent.getEventId()).equals(eventId)&&userevent.getUserFcmToken().equals(userfcm))
 		{
 			System.out.println("inside deleting userevent of member deleted!");
 			addUserEventInterface.delete(userevent);
