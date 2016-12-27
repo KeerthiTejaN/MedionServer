@@ -311,11 +311,16 @@ public class EventManagementController {
 		FcmNotificationService fcmNotificationService = new FcmNotificationService();
 		String[] evedetails = delid.getId().split("!");
 		String eveid = evedetails[0];
+		int count=0;
 		String evefinlatlongs = evedetails[1];
 		String evemem = evedetails[2];
 		for(UserEvent userevent:addUserEventInterface.findAll())
 		{
-			if(Integer.toString(userevent.getEventId()).equals(eveid))
+			if(Integer.toString(userevent.getEventId()).equals(eveid)&&count==0)
+			{
+				count=1;
+			}
+			else
 			{
 				fcmNotificationService.notify("Event Finalized!"+eveid+"!With members= !"+evemem+"! at latlongs= !"+evefinlatlongs, userevent.getUserFcmToken());
 			}
