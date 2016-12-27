@@ -268,7 +268,7 @@ public class EventManagementController {
 					newmembers.append(members[i]+",");
 				}
 			}
-			newmembers.setLength(newmembers.length()-1);
+//			newmembers.setLength(newmembers.length()-1);
 			event.setMemberList(newmembers.toString());
 			System.out.println("new member list:"+newmembers);
 			addEventInterface.save(event);
