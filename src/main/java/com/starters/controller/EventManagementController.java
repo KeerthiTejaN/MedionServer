@@ -289,9 +289,7 @@ public class EventManagementController {
 			addUserEventInterface.delete(userevent);
 		}
 		else
-		{
-			return "Can't find the record of your registration to this event!";
-		}
+		{}
 	}
 	for(UserEvent userevent:addUserEventInterface.findAll())
 	{
