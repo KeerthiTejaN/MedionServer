@@ -319,10 +319,8 @@ public class EventManagementController {
 			{
 				fcmNotificationService.notify("Event Finalized!"+eveid+"!With members= !"+evemem+"! at latlongs= !"+evefinlatlongs, userevent.getUserFcmToken());
 			}
-		
-		return "Event Finalized!";
 		}
-		return null;
+		return "Event Finalized!";
 		
 	}
 	
