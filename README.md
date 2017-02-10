@@ -1,6 +1,6 @@
 # MedionServer
 
-This is an ongoing Maven based Java Spring MVC server side application associated with an Android client application.
+This is a Maven based Java Spring Boot server side application associated with an Android client application.
 
 The application communicates with it's client devices using RESTful API calls and does all the server-side operations specific to the project.
 
